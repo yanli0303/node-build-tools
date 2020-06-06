@@ -9,16 +9,21 @@
   "module": "dist/test.esm.js",
   "typings": "dist/index.d.ts",
   "scripts": {
+    "lint": "tsdx lint src",
+    "pretest": "yarn lint",
+    "test": "tsdx test --runInBand --coverage",
+    "prebuild": "yarn test",
     "build": "tsdx build",
-    "lint": "tsdx lint",
     "prepare": "tsdx build",
-    "start": "tsdx watch",
-    "test": "tsdx test"
+    "start": "tsdx watch"
   },
   "dependencies": {
-
+    "adm-zip": "^0.4.14",
+    "fs-extra": "^9.0.1"
   },
   "devDependencies": {
+    "@types/fs-extra": "^9.0.1",
+    "@types/adm-zip": "^0.4.33",
     "husky": "^4.2.5",
     "tsdx": "^0.13.2",
     "tslib": "^2.0.0",

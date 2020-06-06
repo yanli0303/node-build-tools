@@ -4,7 +4,10 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
+var fsExtra = _interopDefault(require('fs-extra'));
 var ps = _interopDefault(require('child_process'));
+var Zip = _interopDefault(require('adm-zip'));
+var fs = _interopDefault(require('fs'));
 
 function _unsupportedIterableToArray(o, minLen) {
   if (!o) return;
@@ -73,5 +76,38 @@ var shell = function shell(cmd, cwd) {
   }
 };
 
+/**
+ * Make a zip archive from a file/folder on disk.
+ *
+ * @param fileOrFolder The path to the local file/folder.
+ * @param saveAs The path for saving the zip archive file.
+ */
+
+var zip = function zip(fileOrFolder, saveAs) {
+  var isDirectory = fs.lstatSync(fileOrFolder).isDirectory();
+  var zip = new Zip();
+
+  if (isDirectory) {
+    zip.addLocalFolder(fileOrFolder);
+  } else {
+    zip.addLocalFile(fileOrFolder);
+  }
+
+  zip.writeZip(saveAs);
+};
+/**
+ * Extracts the entire archive to the given location
+ * @param zipFile The zip archive to extract.
+ * @param extractTo Path to the save folder.
+ */
+
+var unzip = function unzip(zipFile, extractTo) {
+  var zip = new Zip(zipFile);
+  zip.extractAllTo(extractTo);
+};
+
+exports.fs = fsExtra;
 exports.shell = shell;
+exports.unzip = unzip;
+exports.zip = zip;
 //# sourceMappingURL=node-build-tools.cjs.development.js.map
