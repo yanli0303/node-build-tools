@@ -1,5 +1,7 @@
 # node-build-tools
 
+![CI](https://github.com/yanli0303/node-build-tools/workflows/CI/badge.svg)
+
 Utility Node.js scripts for CI jobs.
 
 ## Usage
