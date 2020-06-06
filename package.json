@@ -1,0 +1,33 @@
+{
+  "name": "node-build-tools",
+  "version": "0.1.0",
+  "description": "Node.js CI scripts",
+  "repository": "https://github.com/yanli0303/node-build-tools.git",
+  "author": "Yan Li",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/test.esm.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsdx build",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build",
+    "start": "tsdx watch",
+    "test": "tsdx test"
+  },
+  "dependencies": {
+
+  },
+  "devDependencies": {
+    "husky": "^4.2.5",
+    "tsdx": "^0.13.2",
+    "tslib": "^2.0.0",
+    "typescript": "^3.9.5"
+  },
+  "engines": {
+    "node": ">=10"
+  },
+  "files": [
+    "dist"
+  ]
+}

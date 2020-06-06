@@ -1,0 +1,11 @@
+**/.DS_Store
+**/Thumbs.db
+
+**/*.log
+**/*.log.gz
+
+**/.eslintcache
+**/eslint-report.json
+
+**/coverage/
+**/node_modules/
