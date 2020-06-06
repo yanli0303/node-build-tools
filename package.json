@@ -11,7 +11,7 @@
   "scripts": {
     "lint": "tsdx lint src",
     "pretest": "yarn lint",
-    "test": "tsdx test --runInBand --coverage",
+    "test": "tsdx test --coverage",
     "prebuild": "yarn test",
     "build": "tsdx build",
     "prepare": "tsdx build",

@@ -21,6 +21,8 @@ yarn add node-build-tools
 ```sh
 git submodule add git@github.com:yanli0303/node-build-tools.git
 git submodule update --init --recursive
+cd node-build-tools
+yarn install
 ```
 
 Then, import to your project like:
