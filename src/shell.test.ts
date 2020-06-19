@@ -1,4 +1,4 @@
-import { shell } from './shell';
+import { shell } from './';
 
 beforeEach(() => {
   global.console.log = jest.fn();

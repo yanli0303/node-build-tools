@@ -1,7 +1,7 @@
 import fs from 'fs-extra';
 import path from 'path';
 
-import { unzip, zip } from './zip';
+import { unzip, zip } from './';
 
 const TEST_DIR = path.join(__dirname, 'test-cache');
 const FILE_ZIP = path.join(TEST_DIR, 'file.zip');

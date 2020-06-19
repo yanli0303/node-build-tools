@@ -4,7 +4,9 @@ import ps from 'child_process';
  * Execute shell commands.
  *
  * @remarks
- * `stdio` are inherited.
+ * - `stdio` are inherited.
+ * - There is a NPM package named `shelljs`, it is designed to
+ * make commands cross-platform which isn't our goal.
  *
  * @param cmd The command or commands to execute.
  * @param cwd Current working directory, defaults to `process.cwd()`;
