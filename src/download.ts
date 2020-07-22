@@ -17,23 +17,38 @@ export const download = (
   options: http.RequestOptions | https.RequestOptions = {}
 ) =>
   new Promise((resolve, reject) => {
-    (url.toLowerCase().startsWith('https://') ? https : http)
-      .get(url, options, res => {
-        const file = fs.createWriteStream(saveAs);
-        res.pipe(file);
-
-        file.on('finish', () => {
-          file.close();
-
-          // Wait for a moment to let file close.
-          setTimeout(resolve, fileCloseDelay);
-        });
-      })
-      .on('error', error => {
-        if (fs.existsSync(saveAs)) {
-          fs.unlinkSync(saveAs);
+    const lib = url.toLowerCase().startsWith('https://') ? https : http;
+    const write = (res: http.IncomingMessage) => {
+      if (res.statusCode && res.statusCode >= 300 && res.statusCode < 400) {
+        const { location } = res.headers;
+        if (location) {
+          lib.get(location, options, write);
+          return;
         }
 
-        reject(error);
+        reject(
+          new Error(
+            `"location" header not found for HTTP ${res.statusCode} response.`
+          )
+        );
+      }
+
+      const file = fs.createWriteStream(saveAs);
+      res.pipe(file);
+
+      file.on('finish', () => {
+        file.close();
+
+        // Wait for a moment to let file close.
+        setTimeout(resolve, fileCloseDelay);
       });
+    };
+
+    lib.get(url, options, write).on('error', error => {
+      if (fs.existsSync(saveAs)) {
+        fs.unlinkSync(saveAs);
+      }
+
+      reject(error);
+    });
   });
