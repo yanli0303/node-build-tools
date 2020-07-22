@@ -14,7 +14,8 @@ beforeAll(() => {
 });
 afterAll(() => fs.removeSync(TEST_DIR));
 
-it('http', async () => {
+// git workflow doesn't have internet access
+it.skip('http', async () => {
   const url = 'http://speedtest.tele2.net/1MB.zip';
   expect.assertions(3);
   expect(fs.existsSync(SAVE_AS_HTTP)).toBeFalsy();
@@ -24,7 +25,8 @@ it('http', async () => {
   expect(fs.lstatSync(SAVE_AS_HTTP).size).toBeGreaterThan(1024);
 });
 
-it('https', async () => {
+// git workflow doesn't have internet access
+it.skip('https', async () => {
   const url = 'https://www.google.com/';
   expect.assertions(3);
   expect(fs.existsSync(SAVE_AS_HTTPS)).toBeFalsy();
