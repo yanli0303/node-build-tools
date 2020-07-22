@@ -10,10 +10,15 @@ import https from 'https';
  * @param fileCloseDelay The number of milliseconds to wait
  * after file handle is closed.
  */
-export const download = (url: string, saveAs: string, fileCloseDelay = 3000) =>
+export const download = (
+  url: string,
+  saveAs: string,
+  fileCloseDelay = 3000,
+  options: http.RequestOptions | https.RequestOptions = {}
+) =>
   new Promise((resolve, reject) => {
     (url.toLowerCase().startsWith('https://') ? https : http)
-      .get(url, res => {
+      .get(url, options, res => {
         const file = fs.createWriteStream(saveAs);
         res.pipe(file);
 
