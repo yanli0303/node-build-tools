@@ -14,24 +14,30 @@ beforeAll(() => {
 });
 afterAll(() => fs.removeSync(TEST_DIR));
 
-// git workflow doesn't have internet access
-it.skip('http', async () => {
-  const url = 'http://speedtest.tele2.net/1MB.zip';
-  expect.assertions(3);
-  expect(fs.existsSync(SAVE_AS_HTTP)).toBeFalsy();
+if (!process.env.CI) {
+  // git workflow doesn't have internet access
+  it('http', async () => {
+    const url = 'http://speedtest.tele2.net/1MB.zip';
+    expect.assertions(3);
+    expect(fs.existsSync(SAVE_AS_HTTP)).toBeFalsy();
 
-  await download(url, SAVE_AS_HTTP);
-  expect(fs.existsSync(SAVE_AS_HTTP)).toBeTruthy();
-  expect(fs.lstatSync(SAVE_AS_HTTP).size).toBeGreaterThan(1024);
-});
+    await download(url, SAVE_AS_HTTP);
+    expect(fs.existsSync(SAVE_AS_HTTP)).toBeTruthy();
+    expect(fs.lstatSync(SAVE_AS_HTTP).size).toBeGreaterThan(1024);
+  });
 
-// git workflow doesn't have internet access
-it.skip('https', async () => {
-  const url = 'https://www.google.com/';
-  expect.assertions(3);
-  expect(fs.existsSync(SAVE_AS_HTTPS)).toBeFalsy();
+  // git workflow doesn't have internet access
+  it('https', async () => {
+    const url = 'https://www.google.com/';
+    expect.assertions(3);
+    expect(fs.existsSync(SAVE_AS_HTTPS)).toBeFalsy();
 
-  await download(url, SAVE_AS_HTTPS);
-  expect(fs.existsSync(SAVE_AS_HTTPS)).toBeTruthy();
-  expect(fs.lstatSync(SAVE_AS_HTTPS).size).toBeGreaterThan(1024);
-});
+    await download(url, SAVE_AS_HTTPS);
+    expect(fs.existsSync(SAVE_AS_HTTPS)).toBeTruthy();
+    expect(fs.lstatSync(SAVE_AS_HTTPS).size).toBeGreaterThan(1024);
+  });
+} else {
+  it('skip test if env.CI=true', () => {
+    expect(1).toBeTruthy();
+  });
+}
