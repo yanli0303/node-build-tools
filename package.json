@@ -1,6 +1,6 @@
 {
   "name": "node-build-tools",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Node.js CI scripts",
   "repository": "https://github.com/yanli0303/node-build-tools.git",
   "author": "Yan Li",
