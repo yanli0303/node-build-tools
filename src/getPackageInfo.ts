@@ -20,10 +20,15 @@ const DEFAULT_INFO_FIELDS = [
 
 export const getPackageInfo = (
   packageName: string,
-  fields: string[] = DEFAULT_INFO_FIELDS
+  fields: string[] = DEFAULT_INFO_FIELDS,
+  registry?: string
 ) => {
   const file = `tmp${Date.now()}.json`;
-  shell(`${NPM_INFO} ${packageName} ${fields.join(' ')} > ${file}`, __dirname);
+  const reg = registry ? ` --registry=${registry}` : '';
+  shell(
+    `${NPM_INFO}${reg} ${packageName} ${fields.join(' ')} > ${file}`,
+    __dirname
+  );
 
   try {
     const data = require(`./${file}`);
