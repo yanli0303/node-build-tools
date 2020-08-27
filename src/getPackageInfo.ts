@@ -25,10 +25,8 @@ export const getPackageInfo = (
 ) => {
   const file = `tmp${Date.now()}.json`;
   const reg = registry ? ` --registry=${registry}` : '';
-  shell(
-    `${NPM_INFO}${reg} ${packageName} ${fields.join(' ')} > ${file}`,
-    __dirname
-  );
+  const cwd = process.cwd();
+  shell(`${NPM_INFO}${reg} ${packageName} ${fields.join(' ')} > ${file}`, cwd);
 
   try {
     const data = require(`./${file}`);
@@ -36,6 +34,6 @@ export const getPackageInfo = (
   } catch (e) {
     throw e;
   } finally {
-    fs.removeSync(path.join(__dirname, file));
+    fs.removeSync(path.join(cwd, file));
   }
 };

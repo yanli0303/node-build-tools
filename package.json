@@ -1,6 +1,6 @@
 {
   "name": "node-build-tools",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "Node.js CI scripts",
   "repository": "https://github.com/yanli0303/node-build-tools.git",
   "author": "Yan Li",
@@ -18,16 +18,17 @@
     "start": "tsdx watch"
   },
   "dependencies": {
-    "adm-zip": "^0.4.14",
+    "adm-zip": "^0.4.16",
     "fs-extra": "^9.0.1"
   },
   "devDependencies": {
     "@types/adm-zip": "^0.4.33",
     "@types/fs-extra": "^9.0.1",
+    "@types/node": "^14.6.1",
     "husky": "^4.2.5",
-    "tsdx": "^0.13.2",
-    "tslib": "^2.0.0",
-    "typescript": "^3.9.5"
+    "tsdx": "^0.13.3",
+    "tslib": "^2.0.1",
+    "typescript": "^4.0.2"
   },
   "engines": {
     "node": ">=10"
