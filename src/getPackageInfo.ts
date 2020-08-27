@@ -23,17 +23,17 @@ export const getPackageInfo = (
   fields: string[] = DEFAULT_INFO_FIELDS,
   registry?: string
 ) => {
-  const file = `tmp${Date.now()}.json`;
-  const reg = registry ? ` --registry=${registry}` : '';
   const cwd = process.cwd();
+  const file = path.join(cwd, `tmp${Date.now()}.json`);
+  const reg = registry ? ` --registry=${registry}` : '';
   shell(`${NPM_INFO}${reg} ${packageName} ${fields.join(' ')} > ${file}`, cwd);
 
   try {
-    const data = require(`./${file}`);
+    const data = require(file);
     return { ...data };
   } catch (e) {
     throw e;
   } finally {
-    fs.removeSync(path.join(cwd, file));
+    fs.removeSync(file);
   }
 };
