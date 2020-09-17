@@ -14,7 +14,7 @@ export const download = (
   url: string,
   saveAs: string,
   fileCloseDelay = 3000,
-  options: http.RequestOptions | https.RequestOptions = {}
+  options: http.RequestOptions | https.RequestOptions = {},
 ) =>
   new Promise((resolve, reject) => {
     const lib = url.toLowerCase().startsWith('https://') ? https : http;
@@ -28,8 +28,8 @@ export const download = (
 
         reject(
           new Error(
-            `"location" header not found for HTTP ${res.statusCode} response.`
-          )
+            `"location" header not found for HTTP ${res.statusCode} response.`,
+          ),
         );
       }
 
@@ -44,7 +44,7 @@ export const download = (
       });
     };
 
-    lib.get(url, options, write).on('error', error => {
+    lib.get(url, options, write).on('error', (error) => {
       if (fs.existsSync(saveAs)) {
         fs.unlinkSync(saveAs);
       }

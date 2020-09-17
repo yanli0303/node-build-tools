@@ -61,7 +61,7 @@ it('unzip folder', () => {
   actual = path.join(
     FOLDER_EXTRACT_TO,
     path.basename(FILE_EXTRACT_TO),
-    path.basename(__filename)
+    path.basename(__filename),
   );
   expect(fs.existsSync(actual)).toBe(true);
   expectedFileSize = fs.lstatSync(__filename).size;

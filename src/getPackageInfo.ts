@@ -21,7 +21,7 @@ const DEFAULT_INFO_FIELDS = [
 export const getPackageInfo = (
   packageName: string,
   fields: string[] = DEFAULT_INFO_FIELDS,
-  registry?: string
+  registry?: string,
 ) => {
   const cwd = process.cwd();
   const file = path.join(cwd, `tmp${Date.now()}.json`);
