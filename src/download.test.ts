@@ -23,7 +23,7 @@ if (!process.env.CI) {
     expect.assertions(5);
     expect(fs.existsSync(SAVE_AS_HTTP)).toBeFalsy();
 
-    const { mime, size } = await download(url, SAVE_AS_HTTP);
+    const { mime, size } = await download(url, SAVE_AS_HTTP, 10000);
     expect(mime).toContain('application/zip');
     expect(size).toEqual(1048576);
     expect(fs.existsSync(SAVE_AS_HTTP)).toBeTruthy();

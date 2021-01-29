@@ -1,6 +1,3 @@
-import fs from 'fs-extra';
-import path from 'path';
-
 import { shell } from './shell';
 
 const NPM_INFO = 'npm view --json';
@@ -24,16 +21,15 @@ export const getPackageInfo = (
   registry?: string,
 ) => {
   const cwd = process.cwd();
-  const file = path.join(cwd, `tmp${Date.now()}.json`);
   const reg = registry ? ` --registry=${registry}` : '';
-  shell(`${NPM_INFO}${reg} ${packageName} ${fields.join(' ')} > ${file}`, cwd);
+  const [json] = shell(
+    `${NPM_INFO}${reg} ${packageName} ${fields.join(' ')}`,
+    cwd,
+  );
 
   try {
-    const data = require(file);
-    return { ...data };
+    return JSON.parse(json);
   } catch (e) {
     throw e;
-  } finally {
-    fs.removeSync(file);
   }
 };
