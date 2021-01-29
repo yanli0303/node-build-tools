@@ -16,7 +16,15 @@ export const download = (
   fileCloseDelay = 3000,
   options: http.RequestOptions | https.RequestOptions = {},
 ) =>
-  new Promise((resolve, reject) => {
+  new Promise<{ mime?: string; size: number }>((resolve, reject) => {
+    const fail = (...args: any[]) => {
+      if (fs.existsSync(saveAs)) {
+        fs.unlinkSync(saveAs);
+      }
+
+      reject(...args);
+    };
+
     const lib = url.toLowerCase().startsWith('https://') ? https : http;
     const write = (res: http.IncomingMessage) => {
       if (res.statusCode && res.statusCode >= 300 && res.statusCode < 400) {
@@ -26,12 +34,20 @@ export const download = (
           return;
         }
 
-        reject(
+        fail(
           new Error(
             `"location" header not found for HTTP ${res.statusCode} response.`,
           ),
         );
+        return;
       }
+
+      const mime = res.headers['content-type'];
+      const size = res.headers['content-length'];
+      const fileInfo = {
+        mime,
+        size: size ? parseInt(size, 10) : -1,
+      };
 
       const file = fs.createWriteStream(saveAs);
       res.pipe(file);
@@ -40,15 +56,11 @@ export const download = (
         file.close();
 
         // Wait for a moment to let file close.
-        setTimeout(resolve, fileCloseDelay);
+        setTimeout(() => resolve(fileInfo), fileCloseDelay);
       });
+
+      file.on('error', fail);
     };
 
-    lib.get(url, options, write).on('error', (error) => {
-      if (fs.existsSync(saveAs)) {
-        fs.unlinkSync(saveAs);
-      }
-
-      reject(error);
-    });
+    lib.get(url, options, write).on('error', fail);
   });
