@@ -11,22 +11,26 @@ import ps from 'child_process';
  * @param cmd The command or commands to execute.
  * @param cwd Current working directory, defaults to `process.cwd()`.
  * @param options Additional `child_process.ExecSyncOptions`.
+ * @returns The stdout from the commands in order.
  */
 export const shell = (
   cmd: string | string[],
   cwd?: string,
   options?: ps.ExecSyncOptions,
-) => {
+): string[] => {
   const settings: ps.ExecSyncOptions = {
     cwd: cwd || process.cwd(),
-    stdio: 'inherit',
     windowsHide: true,
     ...(options || {}),
   };
 
   const commands = Array.isArray(cmd) ? cmd : [cmd];
+  const outputs: string[] = [];
   for (const command of commands) {
     console.log(`\n${command}`);
-    ps.execSync(command, settings);
+    const output = ps.execSync(command, settings);
+    outputs.push(`${output || ''}`);
   }
+
+  return outputs;
 };

@@ -12,13 +12,15 @@ it('command not found', () => {
 
 it('single command', () => {
   const cmd = 'echo single';
-  shell(cmd, __dirname);
+  const [output] = shell(cmd, __dirname);
+  expect(output.trim()).toEqual('single');
   expect(console.log).toHaveBeenCalledWith(`\n${cmd}`);
 });
 
 it('multiple commands', () => {
   const commands = ['echo hello', 'echo world'];
-  shell(commands, __dirname);
+  const outputs = shell(commands, __dirname);
+  expect(outputs.map((it) => it.trim())).toEqual(['hello', 'world']);
 
   expect(console.log).toHaveBeenCalledTimes(2);
   for (const cmd of commands) {
