@@ -19,12 +19,14 @@ export const getPackageInfo = (
   packageName: string,
   fields: string[] = DEFAULT_INFO_FIELDS,
   registry?: string,
+  silent?: boolean,
 ) => {
   const cwd = process.cwd();
   const reg = registry ? ` --registry=${registry}` : '';
   const [json] = shell(
     `${NPM_INFO}${reg} ${packageName} ${fields.join(' ')}`,
     cwd,
+    silent ? { stdio: 'pipe' } : undefined,
   );
 
   try {
