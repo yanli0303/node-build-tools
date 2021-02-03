@@ -1,3 +1,5 @@
+import ps from 'child_process';
+
 import { shell } from './shell';
 
 const NPM_INFO = 'npm view --json';
@@ -19,14 +21,14 @@ export const getPackageInfo = (
   packageName: string,
   fields: string[] = DEFAULT_INFO_FIELDS,
   registry?: string,
-  silent?: boolean,
+  shellExecOptions?: ps.ExecSyncOptions,
 ) => {
   const cwd = process.cwd();
   const reg = registry ? ` --registry=${registry}` : '';
   const [json] = shell(
     `${NPM_INFO}${reg} ${packageName} ${fields.join(' ')}`,
     cwd,
-    silent ? { stdio: 'pipe' } : undefined,
+    shellExecOptions,
   );
 
   try {
